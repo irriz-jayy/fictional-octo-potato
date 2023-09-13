@@ -1,7 +1,7 @@
 import React from "react";
 
 const Homepage = () => {
-  return <div>Homepage</div>;
+  return <div className="min-h-[100vh]">Homepage</div>;
 };
 
 export default Homepage;
