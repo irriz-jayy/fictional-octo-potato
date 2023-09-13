@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Create from "./pages/Create";
 import Saved from "./pages/Saved";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route exact path="/" element={<Homepage />} />
         <Route path="/create" element={<Create />} />
         <Route path="/saved" element={<Saved />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
       <Footer />
     </>
