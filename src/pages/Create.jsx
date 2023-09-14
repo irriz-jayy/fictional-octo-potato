@@ -4,7 +4,9 @@ const Create = () => {
   return (
     <>
       <div className="min-h-[80vh]">
-        <p className="p-2 text-center font-bold text-2xl">Create your recipe</p>
+        <p className="p-2 text-center text-orange-500 font-bold text-2xl">
+          Create your recipe
+        </p>
         <div className="flex items-center justify-center p-2">
           <form className="grid grid-cols-2 gap-4">
             <div className="flex flex-col">
@@ -66,6 +68,9 @@ const Create = () => {
                 placeholder="120 mins"
               ></input>
             </div>
+            <button className="bg-orange-600 col-span-2 h-12 text-white rounded-md hover:bg-orange-500">
+              Submit
+            </button>
           </form>
         </div>
       </div>
