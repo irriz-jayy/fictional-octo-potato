@@ -2,7 +2,13 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        heading: ['"DM Serif Display"'],
+        main: ['"Cormorant Garamond"'],
+        curve: ["Pacifico"],
+      },
+    },
   },
   plugins: [require("@tailwindcss/forms")],
 };

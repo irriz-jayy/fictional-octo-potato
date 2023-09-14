@@ -3,7 +3,7 @@ import React from "react";
 const Create = () => {
   return (
     <>
-      <div className="min-h-[80vh]">
+      <div className="min-h-[80vh] font-main">
         <p className="p-2 text-center text-orange-500 font-bold text-2xl">
           Create your recipe
         </p>
