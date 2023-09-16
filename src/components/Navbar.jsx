@@ -20,12 +20,12 @@ export default function Navbar() {
                   <img
                     className="block h-8 w-auto lg:hidden"
                     src={logo}
-                    alt="Your Company"
+                    alt="Simply good"
                   />
                   <img
                     className="hidden h-8 w-auto lg:block"
                     src={logo}
-                    alt="Your Company"
+                    alt="Simply good"
                   />
                 </div>
                 <div className="hidden lg:ml-6 lg:flex lg:space-x-8">
@@ -43,10 +43,10 @@ export default function Navbar() {
                     Create
                   </a>
                   <a
-                    href="/saved"
+                    href="/about"
                     className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
                   >
-                    Saved
+                    About
                   </a>
                 </div>
               </div>
@@ -158,10 +158,10 @@ export default function Navbar() {
               </Disclosure.Button>
               <Disclosure.Button
                 as="a"
-                href="/saved"
+                href="/about"
                 className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
               >
-                Saved
+                About
               </Disclosure.Button>
             </div>
             <div className="border-t border-gray-200 pt-4 pb-3">

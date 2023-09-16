@@ -6,6 +6,7 @@ import Create from "./pages/Create";
 import Saved from "./pages/Saved";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import About from "./pages/About";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Homepage />} />
         <Route path="/create" element={<Create />} />
+        <Route path="/about" element={<About />} />
         <Route path="/saved" element={<Saved />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<NotFound />} />
