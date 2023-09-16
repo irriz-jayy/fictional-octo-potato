@@ -1,23 +1,22 @@
 const people = [
   {
-    name: "Emma Dorsey",
-    role: "Senior Front-end Developer",
+    name: "Jay Felix",
+    role: "Full-stack Developer",
     imageUrl:
-      "https://images.unsplash.com/photo-1505840717430-882ce147ef2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80",
+      "https://avatars.githubusercontent.com/u/109692159?s=400&u=c752005226ac67afc7e5602a4f867cc5f0659737&v=4",
     bio: "Ultricies massa malesuada viverra cras lobortis. Tempor orci hac ligula dapibus mauris sit ut eu. Eget turpis urna maecenas cras. Nisl dictum.",
     twitterUrl: "#",
     linkedinUrl: "#",
   },
   {
-    name: "Emma Dorsey",
-    role: "Senior Front-end Developer",
+    name: "Jennifer Sammy",
+    role: "Full-stack Developer",
     imageUrl:
       "https://images.unsplash.com/photo-1505840717430-882ce147ef2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80",
     bio: "Ultricies massa malesuada viverra cras lobortis. Tempor orci hac ligula dapibus mauris sit ut eu. Eget turpis urna maecenas cras. Nisl dictum.",
     twitterUrl: "#",
     linkedinUrl: "#",
   },
-  // More people...
 ];
 
 export default function TeamSection() {
