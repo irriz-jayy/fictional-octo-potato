@@ -2,14 +2,17 @@ import React, { useEffect, useState } from "react";
 import Carousel from "../components/Carousel";
 import fetchRecipes from "../api/recipes";
 import FoodCard from "../components/FoodCard";
+import { Skeleton } from "@mui/material";
 
 const Homepage = () => {
   const [recipes, setRecipes] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     fetchRecipes()
       .then((data) => {
         setRecipes(data);
+        setIsLoaded(true);
       })
       .catch((error) => {
         console.log("Error fetching recipes:", error);
@@ -35,11 +38,17 @@ const Homepage = () => {
         <Carousel />
       </div>
       {/*  */}
-      <div className="min-h-96 border">
+      <div className="min-h-96">
         <div>
-          {recipes.map((recipe) => (
-            <FoodCard key={recipe.id} recipe={recipe} />
-          ))}
+          {isLoaded ? (
+            // Render FoodCard components when data is loaded
+            recipes.map((recipe) => (
+              <FoodCard key={recipe.id} recipe={recipe} />
+            ))
+          ) : (
+            // Render Skeleton components while data is loading
+            <Skeleton variant="rectangular" height={200} />
+          )}
         </div>
       </div>
     </div>
