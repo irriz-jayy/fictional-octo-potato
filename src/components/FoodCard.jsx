@@ -1,3 +1,4 @@
+import { AccessTimeOutlined, PeopleAltOutlined } from "@mui/icons-material";
 import {
   Button,
   Card,
@@ -25,18 +26,21 @@ const FoodCard = ({ recipe }) => {
             {recipe.description}
           </Typography>
           <Typography
-            variant="caption"
+            variant="h6"
             display="inline-block"
             color="text.secondary"
             gutterBottom
           >
+            <PeopleAltOutlined color="primary" />
             {recipe.number_of_people_served}
           </Typography>{" "}
           <Typography
-            variant="caption"
+            variant="h6"
             display="inline-block"
             color="text.secondary"
           >
+            <AccessTimeOutlined color="primary" />
+
             {recipe.time}
           </Typography>
           <CardActions>
