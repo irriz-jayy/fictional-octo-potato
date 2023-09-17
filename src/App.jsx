@@ -7,6 +7,7 @@ import Saved from "./pages/Saved";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import About from "./pages/About";
+import FoodCard from "./components/FoodCard";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/saved" element={<Saved />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/card" element={<FoodCard />} />
       </Routes>
       <Footer />
     </>

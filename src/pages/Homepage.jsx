@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Carousel from "../components/Carousel";
+import fetchRecipes from "../api/recipes";
+import FoodCard from "../components/FoodCard";
 
 const Homepage = () => {
+  const [recipes, setRecipes] = useState([]);
+
+  useEffect(() => {
+    fetchRecipes()
+      .then((data) => {
+        setRecipes(data);
+      })
+      .catch((error) => {
+        console.log("Error fetching recipes:", error);
+      });
+  }, []);
   return (
     <div className="min-h-[100vh]">
       {/* Header section */}
@@ -22,7 +35,13 @@ const Homepage = () => {
         <Carousel />
       </div>
       {/*  */}
-      <div className="h-96 border"></div>
+      <div className="min-h-96 border">
+        <div>
+          {recipes.map((recipe) => (
+            <FoodCard key={recipe.id} recipe={recipe} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
