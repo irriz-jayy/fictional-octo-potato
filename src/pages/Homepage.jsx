@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Carousel from "../components/Carousel";
 import fetchRecipes from "../api/recipes";
 import FoodCard from "../components/FoodCard";
-import { Skeleton } from "@mui/material";
+import { Masonry } from "@mui/lab";
 
 const Homepage = () => {
   const [recipes, setRecipes] = useState([]);
@@ -38,18 +38,12 @@ const Homepage = () => {
         <Carousel />
       </div>
       {/*  */}
-      <div className="min-h-96">
-        <div>
-          {isLoaded ? (
-            // Render FoodCard components when data is loaded
-            recipes.map((recipe) => (
-              <FoodCard key={recipe.id} recipe={recipe} />
-            ))
-          ) : (
-            // Render Skeleton components while data is loading
-            <Skeleton variant="rectangular" height={200} />
-          )}
-        </div>
+      <div className="mt-4 w-screen p-0">
+        <Masonry columns={{ xs: 2, sm: 2 }} spacing={2}>
+          {recipes.map((recipe) => (
+            <FoodCard key={recipe.id} recipe={recipe} />
+          ))}
+        </Masonry>
       </div>
     </div>
   );
