@@ -12,7 +12,7 @@ import React from "react";
 const FoodCard = ({ recipe }) => {
   return (
     <>
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{ maxWidth: 300 }}>
         <CardMedia
           sx={{ height: 140 }}
           image={recipe.image_url}

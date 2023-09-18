@@ -3,6 +3,7 @@ import Carousel from "../components/Carousel";
 import fetchRecipes from "../api/recipes";
 import FoodCard from "../components/FoodCard";
 import { Masonry } from "@mui/lab";
+import { Container } from "@mui/material";
 
 const Homepage = () => {
   const [recipes, setRecipes] = useState([]);
@@ -38,13 +39,16 @@ const Homepage = () => {
         <Carousel />
       </div>
       {/*  */}
-      <div className="mt-4 w-screen p-0">
-        <Masonry columns={{ xs: 2, sm: 2 }} spacing={2}>
+      <Container maxWidth={screen} className="border border-red-500 mt-4">
+        <Masonry
+          columns={{ xs: 2, sm: 3, md: 4, lg: 4 }}
+          spacing={{ xs: 1, sm: 2, md: 3 }}
+        >
           {recipes.map((recipe) => (
             <FoodCard key={recipe.id} recipe={recipe} />
           ))}
         </Masonry>
-      </div>
+      </Container>
     </div>
   );
 };
