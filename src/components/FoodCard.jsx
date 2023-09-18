@@ -16,7 +16,7 @@ const FoodCard = ({ recipe }) => {
         <CardMedia
           sx={{ height: 140 }}
           image={recipe.image_url}
-          title="green iguana"
+          title={recipe.name}
         />
         <CardContent>
           <Typography variant="h5" component="div">

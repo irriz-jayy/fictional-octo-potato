@@ -7,13 +7,11 @@ import { Container } from "@mui/material";
 
 const Homepage = () => {
   const [recipes, setRecipes] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     fetchRecipes()
       .then((data) => {
         setRecipes(data);
-        setIsLoaded(true);
       })
       .catch((error) => {
         console.log("Error fetching recipes:", error);
@@ -38,8 +36,12 @@ const Homepage = () => {
       <div>
         <Carousel />
       </div>
-      {/*  */}
-      <Container maxWidth={screen} className="border border-red-500 mt-4">
+      {/* Heading for the recipe section */}
+      <div className="h-[5vh] text-center p-2">
+        <p className="text-2xl font-heading text-orange-600">Popular recipes</p>
+      </div>
+      {/* Masonry list of the recipes */}
+      <Container maxWidth={screen} className="mt-4 p-2">
         <Masonry
           columns={{ xs: 2, sm: 3, md: 4, lg: 4 }}
           spacing={{ xs: 1, sm: 2, md: 3 }}
