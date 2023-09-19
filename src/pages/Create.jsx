@@ -1,3 +1,4 @@
+import { SendOutlined } from "@mui/icons-material";
 import React from "react";
 
 const Create = () => {
@@ -77,6 +78,9 @@ const Create = () => {
             </div>
             <button className="bg-orange-600 col-span-2 h-12 text-white rounded-md hover:bg-orange-500">
               Submit
+              <span className="ml-2">
+                <SendOutlined />
+              </span>
             </button>
           </form>
         </div>
