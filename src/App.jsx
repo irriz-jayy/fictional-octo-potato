@@ -8,6 +8,7 @@ import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import About from "./pages/About";
 import FoodCard from "./components/FoodCard";
+import Recipes from "./pages/Recipes";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/saved" element={<Saved />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/recipes" element={<Recipes />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/card" element={<FoodCard />} />
       </Routes>
