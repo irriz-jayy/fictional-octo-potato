@@ -5,6 +5,7 @@ import FoodCard from "../components/FoodCard";
 import { Masonry } from "@mui/lab";
 import { Button, Container } from "@mui/material";
 import { DoubleArrowOutlined } from "@mui/icons-material";
+import best from "../assets/best.jpg";
 
 const Homepage = () => {
   const [recipes, setRecipes] = useState([]);
@@ -54,16 +55,40 @@ const Homepage = () => {
           ))}
         </Masonry>
       </Container>
-      <div className="text-center">
+      <div className="text-center my-2">
         <a
           href="/recipes"
-          className="p-2 text-white rounded-md border bg-orange-600 shadow-md hover:bg-orange-500"
+          className="font-heading p-2 text-white rounded-md border bg-orange-600 shadow-md hover:bg-orange-500"
         >
           More recipes
           <span>
             <DoubleArrowOutlined />
           </span>
         </a>
+      </div>
+      {/* Best recipe section */}
+      <div className="h-96 relative">
+        <img
+          src={best}
+          alt="best recipe"
+          className="h-96 w-screen object-cover"
+        />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="bg-white text-center w-3/4 h-1/2 sm:w-1/2 sm:h-1/2 md:w-1/2 md:h-1/2 lg:w-1/4 lg:h-1/2">
+            <p className="font-heading text-2xl p-2">Best Recipes 2023</p>
+            <p className="font-main text-lg p-2">
+              <span className="font-curve text-orange-600">Simply good</span>{" "}
+              offers only the best recipes. And they are user made. Dont be left
+              behind. <span className="text-orange-600">Sign up now!</span>
+            </p>
+            <a
+              href="/sign_up"
+              className="font-heading p-2 text-white rounded-md border bg-orange-600 shadow-md hover:bg-orange-500"
+            >
+              Sign up
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );
