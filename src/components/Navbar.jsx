@@ -32,7 +32,7 @@ export default function Navbar() {
                   {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
                   <a
                     href="/"
-                    className="inline-flex items-center border-b-2 border-indigo-500 px-1 pt-1 text-sm font-medium text-gray-900"
+                    className="inline-flex items-center border-b-2 border-orange-600 px-1 pt-1 text-sm font-medium text-gray-900"
                   >
                     Home
                   </a>
@@ -65,7 +65,7 @@ export default function Navbar() {
                     <input
                       id="search"
                       name="search"
-                      className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-3 leading-5 placeholder-gray-500 focus:border-indigo-500 focus:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full rounded-md border border-gray-300 bg-white text-orange-600 py-2 pl-10 pr-3 leading-5 placeholder-gray-500 focus:border-orange-600 focus:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-orange-600 sm:text-sm"
                       placeholder="Search for recipes..."
                       type="search"
                     />
@@ -145,7 +145,7 @@ export default function Navbar() {
               <Disclosure.Button
                 as="a"
                 href="/"
-                className="block border-l-4 border-indigo-500 bg-indigo-50 py-2 pl-3 pr-4 text-base font-medium text-indigo-700"
+                className="block border-l-4 border-orange-600 bg-orange-50 py-2 pl-3 pr-4 text-base font-medium text-orange-600"
               >
                 Home
               </Disclosure.Button>

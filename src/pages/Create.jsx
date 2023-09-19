@@ -8,16 +8,20 @@ const Create = () => {
           Create your recipe
         </p>
         <div className="flex items-center justify-center p-2">
-          <form className="grid grid-cols-2 gap-4">
+          <form className="grid grid-cols-2 gap-4 ">
             <div className="flex flex-col">
               <label>Recipe name</label>
-              <input type="text" className="rounded-md" placeholder="Chapati" />
+              <input
+                type="text"
+                className="rounded-md focus:border-orange-600 focus:ring-orange-600"
+                placeholder="Chapati"
+              />
             </div>
             <div className="flex flex-col">
               <label>Country of origin</label>
               <input
                 type="text"
-                className="rounded-md"
+                className="rounded-md focus:border-orange-600 focus:ring-orange-600"
                 placeholder="Kenya"
               ></input>
             </div>
@@ -26,7 +30,7 @@ const Create = () => {
               <textarea
                 id="description"
                 rows={4}
-                className="rounded-md"
+                className="rounded-md focus:border-orange-600 focus:ring-orange-600"
                 placeholder="Flat and round..."
               ></textarea>
             </div>
@@ -35,7 +39,7 @@ const Create = () => {
               <textarea
                 id="ingriedients"
                 rows={4}
-                className="rounded-md"
+                className="rounded-md focus:border-orange-600 focus:ring-orange-600"
                 placeholder="Flour, warm water..."
               ></textarea>
             </div>
@@ -44,7 +48,7 @@ const Create = () => {
               <textarea
                 id="directions"
                 rows={4}
-                className="rounded-md"
+                className="rounded-md focus:border-orange-600 focus:ring-orange-600"
                 placeholder="1. Knead the..."
               ></textarea>
             </div>
@@ -58,13 +62,16 @@ const Create = () => {
             </div>
             <div className="flex flex-col">
               <label>Number of people served</label>
-              <input type="number" className="rounded-md"></input>
+              <input
+                type="number"
+                className="rounded-md focus:border-orange-600 focus:ring-orange-600"
+              ></input>
             </div>
             <div className="flex flex-col col-span-2">
               <label>Cooking time</label>
               <input
                 type="text"
-                className="rounded-md"
+                className="rounded-md focus:border-orange-600 focus:ring-orange-600"
                 placeholder="120 mins"
               ></input>
             </div>
