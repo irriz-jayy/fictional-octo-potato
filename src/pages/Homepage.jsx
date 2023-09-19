@@ -3,7 +3,8 @@ import Carousel from "../components/Carousel";
 import fetchRecipes from "../api/recipes";
 import FoodCard from "../components/FoodCard";
 import { Masonry } from "@mui/lab";
-import { Container } from "@mui/material";
+import { Button, Container } from "@mui/material";
+import { DoubleArrowOutlined } from "@mui/icons-material";
 
 const Homepage = () => {
   const [recipes, setRecipes] = useState([]);
@@ -17,6 +18,8 @@ const Homepage = () => {
         console.log("Error fetching recipes:", error);
       });
   }, []);
+
+  const popularRecipes = recipes.slice(0, 8);
   return (
     <div className="min-h-[100vh]">
       {/* Header section */}
@@ -46,11 +49,22 @@ const Homepage = () => {
           columns={{ xs: 2, sm: 3, md: 4, lg: 4 }}
           spacing={{ xs: 1, sm: 2, md: 3 }}
         >
-          {recipes.map((recipe) => (
+          {popularRecipes.map((recipe) => (
             <FoodCard key={recipe.id} recipe={recipe} />
           ))}
         </Masonry>
       </Container>
+      <div className="text-center">
+        <a
+          href="/recipes"
+          className="p-2 text-white rounded-md border bg-orange-600 shadow-md hover:bg-orange-500"
+        >
+          More recipes
+          <span>
+            <DoubleArrowOutlined />
+          </span>
+        </a>
+      </div>
     </div>
   );
 };
