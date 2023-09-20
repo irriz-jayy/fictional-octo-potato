@@ -37,7 +37,7 @@ export default function SignIn() {
                       <input
                         id="username"
                         name="username"
-                        type="username"
+                        type="text"
                         required
                         className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm text-orange-500 focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
                       />
@@ -106,7 +106,7 @@ export default function SignIn() {
           <img
             className="absolute inset-0 h-full w-full object-cover"
             src={auth}
-            alt=""
+            alt="roasting meat on a grill"
           />
         </div>
       </div>
