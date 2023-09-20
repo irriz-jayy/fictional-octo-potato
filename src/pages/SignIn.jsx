@@ -8,7 +8,9 @@ export default function SignIn() {
         <div className="flex flex-1 flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
           <div className="mx-auto w-full font-heading max-w-sm lg:w-96">
             <div>
-              <img className="h-12 w-auto" src={logo} alt="Simply good" />
+              <a href="/">
+                <img className="h-12 w-auto" src={logo} alt="Simply good" />
+              </a>
               <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">
                 Sign in to your account
               </h2>
