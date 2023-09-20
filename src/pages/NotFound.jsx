@@ -1,6 +1,10 @@
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+
 export default function NotFound() {
   return (
     <>
+      <Navbar />
       <main
         className="min-h-screen bg-cover bg-top sm:bg-top"
         style={{
@@ -28,6 +32,7 @@ export default function NotFound() {
           </div>
         </div>
       </main>
+      <Footer />
     </>
   );
 }

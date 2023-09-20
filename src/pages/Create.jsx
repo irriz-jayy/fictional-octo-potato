@@ -1,9 +1,12 @@
 import { SendOutlined } from "@mui/icons-material";
 import React from "react";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 
 const Create = () => {
   return (
     <>
+      <Navbar />
       <div className="min-h-[80vh] font-main">
         <p className="p-2 text-center text-orange-500 font-bold text-2xl">
           Create your recipe
@@ -85,6 +88,7 @@ const Create = () => {
           </form>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

@@ -1,7 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import Homepage from "./pages/Homepage";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import Create from "./pages/Create";
 import Saved from "./pages/Saved";
 import Profile from "./pages/Profile";
@@ -9,11 +7,12 @@ import NotFound from "./pages/NotFound";
 import About from "./pages/About";
 import FoodCard from "./components/FoodCard";
 import Recipes from "./pages/Recipes";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 
 function App() {
   return (
     <>
-      <Navbar />
       <Routes>
         <Route exact path="/" element={<Homepage />} />
         <Route path="/create" element={<Create />} />
@@ -23,8 +22,9 @@ function App() {
         <Route path="/recipes" element={<Recipes />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/card" element={<FoodCard />} />
+        <Route path="/sign_in" element={<SignIn />} />
+        <Route path="/sign_up" element={<SignUp />} />
       </Routes>
-      <Footer />
     </>
   );
 }

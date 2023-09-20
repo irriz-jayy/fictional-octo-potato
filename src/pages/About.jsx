@@ -1,4 +1,6 @@
 import React from "react";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 import TeamSection from "../components/TeamSection";
 import hero from "../assets/hero.jpg";
 import ban from "../assets/ban.jpg";
@@ -6,6 +8,7 @@ import ban from "../assets/ban.jpg";
 const About = () => {
   return (
     <>
+      <Navbar />
       <div className="min-h-screen">
         {/* first section */}
         <div className="h-screen flex flex-col md:flex-row lg:flex-row">
@@ -112,6 +115,7 @@ const About = () => {
         </div>
         <TeamSection />
       </div>
+      <Footer />
     </>
   );
 };
