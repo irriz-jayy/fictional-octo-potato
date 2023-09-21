@@ -7,8 +7,9 @@ import NotFound from "./pages/NotFound";
 import About from "./pages/About";
 import FoodCard from "./components/FoodCard";
 import Recipes from "./pages/Recipes";
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
+import SignIn from "./pages/auth/SignIn";
+import SignUp from "./pages/auth/SignUp";
+import RecipeDetails from "./pages/RecipeDetails";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/card" element={<FoodCard />} />
         <Route path="/sign_in" element={<SignIn />} />
         <Route path="/sign_up" element={<SignUp />} />
+        <Route path="/recipes/:recipeId" element={<RecipeDetails />} />
       </Routes>
     </>
   );

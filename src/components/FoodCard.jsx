@@ -1,4 +1,9 @@
-import { AccessTimeOutlined, PeopleAltOutlined } from "@mui/icons-material";
+import {
+  AccessTimeOutlined,
+  BookmarkAdd,
+  PeopleAltOutlined,
+  Visibility,
+} from "@mui/icons-material";
 import {
   Button,
   Card,
@@ -8,6 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const FoodCard = ({ recipe }) => {
   return (
@@ -44,8 +50,19 @@ const FoodCard = ({ recipe }) => {
             {recipe.time}
           </Typography>
           <CardActions>
-            <Button size="small" variant="contained">
-              View
+            <Link to={`/recipes/${recipe.id}`} className="mr-2">
+              <Button size="small" variant="contained" endIcon={<Visibility />}>
+                View
+              </Button>
+            </Link>
+            <Button
+              size="small"
+              variant="contained"
+              color="secondary"
+              endIcon={<BookmarkAdd />}
+              onClick={() => alert("Added to bookmarks!")}
+            >
+              Save
             </Button>
           </CardActions>
         </CardContent>

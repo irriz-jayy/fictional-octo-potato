@@ -1,7 +1,7 @@
-import logo from "../assets/logo.png";
-import auth from "../assets/auth.jpg";
+import logo from "../../assets/logo.png";
+import auth from "../../assets/auth.jpg";
 
-export default function SignUp() {
+export default function SignIn() {
   return (
     <>
       <div className="flex h-screen">
@@ -12,15 +12,15 @@ export default function SignUp() {
                 <img className="h-12 w-auto" src={logo} alt="Simply good" />
               </a>
               <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">
-                Sign up for an account
+                Sign in to your account
               </h2>
               <p className="mt-2 text-sm text-gray-600">
                 Or{" "}
                 <a
-                  href="/sign_in"
+                  href="/sign_up"
                   className="font-medium text-orange-600 hover:text-orange-500"
                 >
-                  sign in to your account
+                  sign up for an account
                 </a>
               </p>
             </div>
@@ -28,40 +28,6 @@ export default function SignUp() {
             <div className="mt-8">
               <div className="mt-6">
                 <form action="#" method="POST" className="space-y-6">
-                  <div>
-                    <label
-                      htmlFor="name"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Name
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        id="name"
-                        name="name"
-                        type="text"
-                        required
-                        className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm text-orange-500 focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Email
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        required
-                        className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm text-orange-500 focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
-                      />
-                    </div>
-                  </div>{" "}
                   <div>
                     <label
                       htmlFor="username"
@@ -78,7 +44,8 @@ export default function SignUp() {
                         className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm text-orange-500 focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
                       />
                     </div>
-                  </div>{" "}
+                  </div>
+
                   <div className="space-y-1">
                     <label
                       htmlFor="password"
@@ -97,23 +64,7 @@ export default function SignUp() {
                       />
                     </div>
                   </div>
-                  <div>
-                    <label
-                      htmlFor="profile_picture"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Profile Picture
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        id="profile"
-                        name="profile"
-                        type="file"
-                        required
-                        className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm text-orange-500 focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
-                      />
-                    </div>
-                  </div>
+
                   {/* <div className="flex items-center justify-between">
                     <div className="flex items-center">
                       <input
@@ -139,12 +90,13 @@ export default function SignUp() {
                       </a>
                     </div>
                   </div> */}
+
                   <div>
                     <button
                       type="submit"
                       className="flex w-full justify-center rounded-md border border-transparent bg-orange-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
                     >
-                      Sign up
+                      Sign in
                     </button>
                   </div>
                 </form>
