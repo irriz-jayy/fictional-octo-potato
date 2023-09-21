@@ -49,7 +49,7 @@ const RecipeDetails = () => {
             alt={recipe.name}
             className="rounded-md p-2 w-screen h-1/2 object-contain md:w-1/2 lg:w-1/2"
           />
-          <div className="h-1/2 text-center md:w-1/2 lg:w-1/2 ">
+          <div className="h-1/2 text-center md:w-1/2 lg:w-1/2 md:m-auto lg:m-auto">
             <p className="text-orange-600 font-heading text-2xl  p-2">
               {recipe.name}
             </p>
