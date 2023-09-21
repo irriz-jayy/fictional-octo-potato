@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Skeleton } from "@mui/material";
+import { Button, Skeleton } from "@mui/material";
 import fetchRecipeDetails from "../api/fetchRecipeDetails";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import { BookmarkAdd } from "@mui/icons-material";
 
 const RecipeDetails = () => {
-  // Access the recipeId from the URL parameter using useParams
   const { recipeId } = useParams();
 
   const [recipe, setRecipe] = useState(null);
 
   useEffect(() => {
-    // Fetch the recipe details based on recipeId
-    // You can make an API call here to retrieve the recipe details
-    // Replace this with your actual API call
     fetchRecipeDetails(recipeId)
       .then((data) => {
         setRecipe(data);
@@ -20,25 +19,100 @@ const RecipeDetails = () => {
       .catch((error) => {
         console.error("Error fetching recipe details:", error);
       });
-  }, [recipeId]); // Include recipeId in the dependency array to fetch details when it changes
+  }, [recipeId]);
 
-  // Check if the recipe data is available
   if (!recipe) {
     return (
       <>
-        <Skeleton variant="circular" width={40} height={40} />
-        <Skeleton variant="rectangular" width={210} height={60} />
+        <Navbar />
+        <div className="h-screen flex flex-col items-center justify-center">
+          <div className="mb-4">
+            <Skeleton variant="rectangular" width={500} height={100} />
+          </div>
+          <div>
+            <Skeleton variant="rectangular" width={500} height={460} />
+          </div>
+        </div>
+        <Footer />
       </>
     );
   }
 
   return (
-    <div>
-      <h1>{recipe.name}</h1>
-      <img src={recipe.image_url} alt={recipe.name} />
-      <p>{recipe.description}</p>
-      {/* Display other recipe details here */}
-    </div>
+    <>
+      <Navbar />
+      <div className="min-h-screen">
+        {/* <h1>{recipe.name}</h1>
+        <img src={recipe.image_url} alt={recipe.name} />
+        <p>{recipe.description}</p>
+        Display other recipe details here */}
+        {/* header */}
+        <div className="flex flex-col border  h-screen w-screen">
+          <img
+            src={recipe.image_url}
+            alt={recipe.name}
+            className="rounded-md p-2 w-screen h-1/2 object-contain"
+          />
+          <div className="border h-1/2 text-center">
+            <p className="text-orange-600 font-heading text-2xl  p-2">
+              {recipe.name}
+            </p>
+            <p className=" font-main text-lg ">{recipe.description}</p>
+            <p className=" font-main text-lg ">
+              Originates from {recipe.country_of_origin}
+            </p>
+            <p className="text-orange-600 font-main text-lg">
+              Serves {recipe.number_of_people_served}
+            </p>{" "}
+            <p className="text-orange-600 font-main text-lg">
+              Takes {recipe.time} to prepare
+            </p>
+            <Button
+              variant="outlined"
+              endIcon={<BookmarkAdd />}
+              onClick={() => alert(`Saved:${recipeId}`)}
+            >
+              Save
+            </Button>
+          </div>
+        </div>
+        {/* more details section */}
+        <div className="flex flex-col h-screen border">
+          <div className="relative mt-6">
+            <div
+              className="absolute inset-0 flex items-center"
+              aria-hidden="true"
+            >
+              <div className="w-full border-t border-orange-600" />
+            </div>
+            <div className="relative flex justify-center text-2xl font-heading">
+              <span className="bg-white px-2 text-orange-600">Ingredients</span>
+            </div>
+          </div>
+          <p className="font-main text-lg text-center">{recipe.ingredients}</p>
+          <div className="relative mt-6">
+            <div
+              className="absolute inset-0 flex items-center"
+              aria-hidden="true"
+            >
+              <div className="w-full border-t border-orange-600" />
+            </div>
+            <div className="relative flex justify-center text-2xl font-heading">
+              <span className="bg-white px-2 text-orange-600">
+                Cooking instructions
+              </span>
+            </div>
+          </div>
+          <ol className="font-main text-lg text-center">
+            {recipe.directions.split("\n").map((step, index) => (
+              <li key={index}>{step.trim()}</li>
+            ))}
+          </ol>
+        </div>
+      </div>
+
+      <Footer />
+    </>
   );
 };
 
