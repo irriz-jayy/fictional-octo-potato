@@ -85,7 +85,9 @@ const RecipeDetails = () => {
               <span className="bg-white px-2 text-orange-600">Ingredients</span>
             </div>
           </div>
-          <p className="font-main text-lg text-center">{recipe.ingredients}</p>
+          <p className="font-main text-lg text-center p-2">
+            {recipe.ingredients}
+          </p>
           <div className="relative mt-6">
             <div
               className="absolute inset-0 flex items-center"
@@ -99,7 +101,7 @@ const RecipeDetails = () => {
               </span>
             </div>
           </div>
-          <ol className="font-main text-lg text-center">
+          <ol className="font-main text-lg text-center p-2">
             {recipe.directions.split("\n").map((step, index) => (
               <li key={index}>{step.trim()}</li>
             ))}
