@@ -42,18 +42,14 @@ const RecipeDetails = () => {
     <>
       <Navbar />
       <div className="min-h-screen">
-        {/* <h1>{recipe.name}</h1>
-        <img src={recipe.image_url} alt={recipe.name} />
-        <p>{recipe.description}</p>
-        Display other recipe details here */}
         {/* header */}
-        <div className="flex flex-col border  h-screen w-screen">
+        <div className="flex flex-col md:flex-row lg:flex-row md:min-h-96 lg:min-h-96">
           <img
             src={recipe.image_url}
             alt={recipe.name}
-            className="rounded-md p-2 w-screen h-1/2 object-contain"
+            className="rounded-md p-2 w-screen h-1/2 object-contain md:w-1/2 lg:w-1/2"
           />
-          <div className="border h-1/2 text-center">
+          <div className="h-1/2 text-center md:w-1/2 lg:w-1/2 ">
             <p className="text-orange-600 font-heading text-2xl  p-2">
               {recipe.name}
             </p>
@@ -77,7 +73,7 @@ const RecipeDetails = () => {
           </div>
         </div>
         {/* more details section */}
-        <div className="flex flex-col h-screen border">
+        <div className="flex flex-col h-screen">
           <div className="relative mt-6">
             <div
               className="absolute inset-0 flex items-center"
