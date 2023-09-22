@@ -11,24 +11,27 @@ import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
 import RecipeDetails from "./pages/RecipeDetails";
 import MyRecipes from "./pages/MyRecipes";
+import { AuthProvider } from "./context/authContext";
 
 function App() {
   return (
     <>
-      <Routes>
-        <Route exact path="/" element={<Homepage />} />
-        <Route path="/create" element={<Create />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/saved" element={<Saved />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/recipes" element={<Recipes />} />
-        <Route path="*" element={<NotFound />} />
-        <Route path="/card" element={<FoodCard />} />
-        <Route path="/sign_in" element={<SignIn />} />
-        <Route path="/sign_up" element={<SignUp />} />
-        <Route path="/recipes/:recipeId" element={<RecipeDetails />} />
-        <Route path="/my_recipes" element={<MyRecipes />} />
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route exact path="/" element={<Homepage />} />
+          <Route path="/create" element={<Create />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/saved" element={<Saved />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/recipes" element={<Recipes />} />
+          <Route path="*" element={<NotFound />} />
+          <Route path="/card" element={<FoodCard />} />
+          <Route path="/sign_in" element={<SignIn />} />
+          <Route path="/sign_up" element={<SignUp />} />
+          <Route path="/recipes/:recipeId" element={<RecipeDetails />} />
+          <Route path="/my_recipes" element={<MyRecipes />} />
+        </Routes>
+      </AuthProvider>
     </>
   );
 }

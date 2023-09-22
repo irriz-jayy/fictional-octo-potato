@@ -1,7 +1,37 @@
 import logo from "../../assets/logo.png";
 import auth from "../../assets/auth.jpg";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../context/authContext";
+import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
+  const { login } = useContext(AuthContext);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      console.log("User already authenticated");
+    }
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const { user, token } = await login(username, password);
+      alert("Logged in success");
+      navigate("/");
+
+      setUsername("");
+      setPassword("");
+    } catch (error) {
+      console.log("error:", error.message);
+      alert(error.message);
+    }
+  };
   return (
     <>
       <div className="flex h-screen">
@@ -40,6 +70,8 @@ export default function SignIn() {
                         id="username"
                         name="username"
                         type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                         required
                         className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm text-orange-500 focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
                       />
@@ -59,6 +91,8 @@ export default function SignIn() {
                         name="password"
                         type="password"
                         autoComplete="current-password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                         required
                         className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm text-orange-500  focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
                       />
@@ -94,6 +128,7 @@ export default function SignIn() {
                   <div>
                     <button
                       type="submit"
+                      onClick={handleSubmit}
                       className="flex w-full justify-center rounded-md border border-transparent bg-orange-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
                     >
                       Sign in
