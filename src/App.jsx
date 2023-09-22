@@ -10,6 +10,7 @@ import Recipes from "./pages/Recipes";
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
 import RecipeDetails from "./pages/RecipeDetails";
+import MyRecipes from "./pages/MyRecipes";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/sign_in" element={<SignIn />} />
         <Route path="/sign_up" element={<SignUp />} />
         <Route path="/recipes/:recipeId" element={<RecipeDetails />} />
+        <Route path="/my_recipes" element={<MyRecipes />} />
       </Routes>
     </>
   );

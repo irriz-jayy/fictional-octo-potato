@@ -55,7 +55,7 @@ const Profile = () => {
             <ArrowForward className="text-white" />
           </a>
           <a
-            href="#"
+            href="/my_recipes"
             className="bg-orange-600 h-32 w-3/4 rounded-md flex justify-between items-center p-4"
           >
             <Cake className="text-white" />
