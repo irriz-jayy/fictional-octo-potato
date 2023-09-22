@@ -47,7 +47,7 @@ const Profile = () => {
         {/* cards */}
         <div className="m-2 h-80 w-screen grid grid-cols-1 gap-2">
           <a
-            href="#"
+            href="/saved"
             className="bg-orange-600 h-32 w-3/4 rounded-md flex justify-between items-center p-4"
           >
             <FavoriteOutlined className="text-white" />
