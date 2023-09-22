@@ -9,17 +9,17 @@ const Saved = () => {
   return (
     <>
       <Navbar />
-      <div className="h-screen">
+      <div className="min-h-96">
         {/* header */}
         <div className="h-[10vh] flex justify-center items-center">
           <p className="text-orange-600 font-heading text-2xl">Saved Recipes</p>
         </div>
         {/* saved cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 border w-screen h-96 ">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 min-h-[60vh] ">
           {/* add recipe card */}
           <a
             href="/recipes"
-            className="text-white text-2xl w-48 h-60 rounded-md m-auto bg-orange-600 flex flex-col items-center justify-center cursor-pointer"
+            className="text-white text-2xl w-48 h-60 rounded-md m-auto bg-orange-600 flex flex-col items-center justify-center cursor-pointer hover:bg-white hover:text-orange-600 hover:border hover:border-orange-600"
           >
             <Add />
             <div>
@@ -27,7 +27,6 @@ const Saved = () => {
             </div>
           </a>
           {/* card */}
-
           <div className="w-48 border border-orange-600 h-60 rounded-md m-auto">
             <img src={pfp} alt="" className="object-contain" />
             <div className="text-center p-2">
