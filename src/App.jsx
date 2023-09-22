@@ -12,6 +12,7 @@ import SignUp from "./pages/auth/SignUp";
 import RecipeDetails from "./pages/RecipeDetails";
 import MyRecipes from "./pages/MyRecipes";
 import { AuthProvider } from "./context/authContext";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/recipes/:recipeId" element={<RecipeDetails />} />
           <Route path="/my_recipes" element={<MyRecipes />} />
         </Routes>
+        <ToastContainer />
       </AuthProvider>
     </>
   );

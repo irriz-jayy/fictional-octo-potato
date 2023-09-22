@@ -3,6 +3,8 @@ import auth from "../../assets/auth.jpg";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/authContext";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function SignIn() {
   const { login } = useContext(AuthContext);
@@ -22,14 +24,14 @@ export default function SignIn() {
     e.preventDefault();
     try {
       const { user, token } = await login(username, password);
-      alert("Logged in success");
+      toast.success("Logged in successfully");
       navigate("/");
 
       setUsername("");
       setPassword("");
     } catch (error) {
       console.log("error:", error.message);
-      alert(error.message);
+      toast.error(error.message);
     }
   };
   return (
