@@ -1,7 +1,93 @@
 import logo from "../../assets/logo.png";
 import auth from "../../assets/auth.jpg";
+import { AuthContext } from "../../context/authContext";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
+  const { signup } = useContext(AuthContext);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [profilePictureUrl, setProfilePictureUrl] = useState(null);
+
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    user: {
+      name: "",
+      email: "",
+      username: "",
+      password: "",
+      profile_picture_url: "",
+    },
+  });
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    fetch("http://127.0.0.1:3000/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((resp) => {
+        if (resp.ok) {
+          resp.json().then((data) => {
+            console.log(data);
+            showMessage("Report has been saved successfully.");
+            navigate("/sign_up");
+          });
+        } else {
+          // Handle errors
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        // Handle network errors
+      });
+  }
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      const newFormData = new FormData();
+      newFormData.append("profile_picture_url", file);
+      newFormData.append("upload_preset", "h9stgrub");
+
+      // Replace the Cloudinary URL with your own
+      fetch(
+        `https://api.cloudinary.com/v1_1/${cloudinaryCloudName}/image/upload`,
+        {
+          method: "POST",
+          body: newFormData, // Use the newFormData object containing the image file
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          // Handle the Cloudinary response here
+          setProfilePictureUrl(data.secure_url);
+        })
+        .catch((error) => {
+          console.error("Error uploading image to Cloudinary:", error);
+        });
+    } else {
+      // Handle non-file input changes (e.g., text input)
+      setFormData({
+        ...formData,
+        user: {
+          ...formData.user,
+          [name]: value, // Update the specific user attribute (e.g., name, email, etc.)
+        },
+      });
+    }
+  }
+
   return (
     <>
       <div className="flex h-screen">
@@ -40,6 +126,8 @@ export default function SignUp() {
                         id="name"
                         name="name"
                         type="text"
+                        value={formData.name}
+                        onChange={handleChange}
                         required
                         className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm text-orange-500 focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
                       />
@@ -57,6 +145,8 @@ export default function SignUp() {
                         id="email"
                         name="email"
                         type="email"
+                        value={formData.email}
+                        onChange={handleChange}
                         required
                         className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm text-orange-500 focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
                       />
@@ -75,6 +165,8 @@ export default function SignUp() {
                         name="username"
                         type="text"
                         required
+                        value={formData.username}
+                        onChange={handleChange}
                         className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm text-orange-500 focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
                       />
                     </div>
@@ -92,6 +184,8 @@ export default function SignUp() {
                         name="password"
                         type="password"
                         autoComplete="current-password"
+                        value={formData.password}
+                        onChange={handleChange}
                         required
                         className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm text-orange-500  focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
                       />
@@ -107,10 +201,10 @@ export default function SignUp() {
                     <div className="mt-1">
                       <input
                         id="profile"
-                        name="profile"
+                        name="profile_picture_url"
                         type="file"
+                        onChange={handleChange}
                         required
-                        className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm text-orange-500 focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
                       />
                     </div>
                   </div>
@@ -143,6 +237,7 @@ export default function SignUp() {
                     <button
                       type="submit"
                       className="flex w-full justify-center rounded-md border border-transparent bg-orange-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+                      onClick={handleSubmit}
                     >
                       Sign up
                     </button>
