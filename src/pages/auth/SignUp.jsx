@@ -3,6 +3,7 @@ import auth from "../../assets/auth.jpg";
 import { AuthContext } from "../../context/authContext";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function SignUp() {
   const { signup } = useContext(AuthContext);
@@ -11,9 +12,6 @@ export default function SignUp() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [profilePictureUrl, setProfilePictureUrl] = useState(null);
-
-  const cloudinaryCloudName = "dm66wpmtb";
-  const cloudinaryApiKey = "237414245722233";
 
   const navigate = useNavigate();
 
@@ -40,15 +38,16 @@ export default function SignUp() {
       .then((resp) => {
         if (resp.ok) {
           resp.json().then((data) => {
-            console.log(data);
-            console.log("Success:", data);
-            alert("Report has been saved successfully.");
-            navigate("/sign_up");
+            // console.log(data);
+            // console.log("Success:", data);
+            toast.success("USer has been saved successfully.");
+            navigate("/sign_in");
           });
         } else {
           // Handle errors
           resp.json().then((errorData) => {
-            console.error("Error:", errorData); // Log error response
+            // console.error("Error:", errorData); // Log error response
+            toast.error(errorData);
             // Handle errors
           });
         }
@@ -58,7 +57,6 @@ export default function SignUp() {
         // Handle network errors
       });
   }
-
   function handleChange(event) {
     const { name, value } = event.target;
 
@@ -67,7 +65,6 @@ export default function SignUp() {
       const formData = new FormData();
       formData.append("file", file); // Use the 'file' object here
       formData.append("upload_preset", "h9stgrub");
-      console.log("FormData:", formData);
 
       // Replace the Cloudinary URL with your own
       fetch("https://api.cloudinary.com/v1_1/dm66wpmtb/image/upload", {
@@ -76,17 +73,27 @@ export default function SignUp() {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Cloudinary Success:", data);
-          // Handle the Cloudinary response here
-          setProfilePictureUrl(data.secure_url);
+          // console.log("Cloudinary Success:", data);
+          // Extract the secure_url from the Cloudinary response
+          const profilePictureUrl = data.secure_url;
+
+          // Update the profile_picture_url in formData
+          setFormData({
+            ...formData,
+            user: {
+              ...formData.user,
+              profile_picture_url: profilePictureUrl,
+            },
+          });
+
+          // Optionally, you can also update the state for immediate display
+          setProfilePictureUrl(profilePictureUrl);
         })
         .catch((error) => {
           console.error("Error uploading image to Cloudinary:", error);
-          console.error("Cloudinary Error:", error);
         });
     } else {
       // Handle non-file input changes (e.g., text input)
-      console.log("Non-file input change:", name, value);
       // Handle non-file input changes (e.g., text input)
       setFormData({
         ...formData,
@@ -124,6 +131,23 @@ export default function SignUp() {
             <div className="mt-8">
               <div className="mt-6">
                 <form action="#" method="POST" className="space-y-6">
+                  <div>
+                    <label
+                      htmlFor="profile_picture"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Profile Picture
+                    </label>
+                    <div className="mt-1">
+                      <input
+                        id="profile"
+                        name="user[profile_picture_url]"
+                        type="file"
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                  </div>
                   <div>
                     <label
                       htmlFor="name"
@@ -198,23 +222,6 @@ export default function SignUp() {
                         onChange={handleChange}
                         required
                         className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm text-orange-500  focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="profile_picture"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Profile Picture
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        id="profile"
-                        name="profile_picture_url"
-                        type="file"
-                        onChange={handleChange}
-                        required
                       />
                     </div>
                   </div>
