@@ -12,6 +12,9 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [profilePictureUrl, setProfilePictureUrl] = useState(null);
 
+  const cloudinaryCloudName = "dm66wpmtb";
+  const cloudinaryApiKey = "237414245722233";
+
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -38,11 +41,16 @@ export default function SignUp() {
         if (resp.ok) {
           resp.json().then((data) => {
             console.log(data);
-            showMessage("Report has been saved successfully.");
+            console.log("Success:", data);
+            alert("Report has been saved successfully.");
             navigate("/sign_up");
           });
         } else {
           // Handle errors
+          resp.json().then((errorData) => {
+            console.error("Error:", errorData); // Log error response
+            // Handle errors
+          });
         }
       })
       .catch((error) => {
@@ -56,27 +64,29 @@ export default function SignUp() {
 
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
-      const newFormData = new FormData();
-      newFormData.append("profile_picture_url", file);
-      newFormData.append("upload_preset", "h9stgrub");
+      const formData = new FormData();
+      formData.append("file", file); // Use the 'file' object here
+      formData.append("upload_preset", "h9stgrub");
+      console.log("FormData:", formData);
 
       // Replace the Cloudinary URL with your own
-      fetch(
-        `https://api.cloudinary.com/v1_1/${cloudinaryCloudName}/image/upload`,
-        {
-          method: "POST",
-          body: newFormData, // Use the newFormData object containing the image file
-        }
-      )
+      fetch("https://api.cloudinary.com/v1_1/dm66wpmtb/image/upload", {
+        method: "POST",
+        body: formData,
+      })
         .then((response) => response.json())
         .then((data) => {
+          console.log("Cloudinary Success:", data);
           // Handle the Cloudinary response here
           setProfilePictureUrl(data.secure_url);
         })
         .catch((error) => {
           console.error("Error uploading image to Cloudinary:", error);
+          console.error("Cloudinary Error:", error);
         });
     } else {
+      // Handle non-file input changes (e.g., text input)
+      console.log("Non-file input change:", name, value);
       // Handle non-file input changes (e.g., text input)
       setFormData({
         ...formData,
