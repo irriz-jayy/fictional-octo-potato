@@ -13,6 +13,13 @@ const Homepage = () => {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      console.log("User already authenticated");
+    }
+  }, []);
+
+  useEffect(() => {
     fetchRecipes()
       .then((data) => {
         setRecipes(data);
