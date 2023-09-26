@@ -3,7 +3,9 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import logo from "../assets/logo.png";
+import avatar from "../assets/avatar.jpg";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -11,9 +13,10 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const [user, setUser] = useState([]);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
     if (token) {
       console.log(token);
       fetch("http://127.0.0.1:3000/profile", {
@@ -39,6 +42,16 @@ export default function Navbar() {
         });
     }
   }, []);
+
+  function handleLogout() {
+    const confirmed = window.confirm("Are you sure you want to sign out?");
+
+    if (confirmed) {
+      localStorage.removeItem("token"); // Remove the token from localStorage
+      navigate("/");
+    }
+  }
+
   return (
     <Disclosure as="nav" className="bg-white shadow">
       {({ open }) => (
@@ -121,8 +134,8 @@ export default function Navbar() {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full object-cover"
-                        src={user.profile_picture_url}
-                        alt=""
+                        src={token ? user.profile_picture_url : avatar}
+                        alt={user.name}
                       />
                     </Menu.Button>
                   </div>
@@ -150,15 +163,19 @@ export default function Navbar() {
                         )}
                       </Menu.Item>
                       <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
+                        {token ? (
+                          <button
+                            onClick={handleLogout}
+                            className="block px-4 py-2 text-sm text-gray-700 w-full text-left"
                           >
                             Sign out
+                          </button>
+                        ) : (
+                          <a
+                            href="/sign_in"
+                            className="block px-4 py-2 text-sm text-gray-700 w-full text-left"
+                          >
+                            Sign in
                           </a>
                         )}
                       </Menu.Item>
@@ -199,8 +216,8 @@ export default function Navbar() {
                 <div className="flex-shrink-0">
                   <img
                     className="h-10 w-10 rounded-full object-cover"
-                    src={user.profile_picture_url}
-                    alt=""
+                    src={token ? user.profile_picture_url : avatar}
+                    alt={user.name}
                   />
                 </div>
                 <div className="ml-3">
@@ -220,13 +237,22 @@ export default function Navbar() {
                 >
                   Your Profile
                 </Disclosure.Button>
-                <Disclosure.Button
-                  as="a"
-                  href="#"
-                  className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800"
-                >
-                  Sign out
-                </Disclosure.Button>
+                {token ? (
+                  <Disclosure.Button
+                    as="button"
+                    onClick={handleLogout}
+                    className="block px-4 py-2 text-base font-medium text-gray-500 w-full text-left hover:bg-gray-100 hover:text-gray-800"
+                  >
+                    Sign out
+                  </Disclosure.Button>
+                ) : (
+                  <a
+                    href="/sign_in"
+                    className="block px-4 py-2 text-base font-medium text-gray-500 w-full text-left hover:bg-gray-100 hover:text-gray-800"
+                  >
+                    Sign in
+                  </a>
+                )}
               </div>
             </div>
           </Disclosure.Panel>
