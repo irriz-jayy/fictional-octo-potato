@@ -1,5 +1,5 @@
 import { SendOutlined } from "@mui/icons-material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +10,8 @@ const Create = () => {
 
   const [imageUrl, setImageUrl] = useState(null);
 
+  const token = localStorage.getItem("token");
+
   const [formData, setFormData] = useState({
     name: "",
     country_of_origin: "",
@@ -19,8 +21,39 @@ const Create = () => {
     image_url: "",
     number_of_people_served: "",
     time: "",
+    user_id: "",
   });
 
+  useEffect(() => {
+    if (token) {
+      console.log(token);
+      fetch("http://127.0.0.1:3000/profile", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error("Failed to fetch user data");
+          }
+        })
+        .then((userData) => {
+          console.log("ndio hii:", userData);
+          // Extract the user ID from userData and update the formData state
+          setFormData({
+            ...formData,
+            user_id: userData.id, // Assuming the user ID is in the 'id' field of userData
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [token]);
   function handleSubmit(e) {
     e.preventDefault();
     fetch("http://127.0.0.1:3000/recipes", {
@@ -28,6 +61,7 @@ const Create = () => {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(formData),
     })
@@ -35,14 +69,14 @@ const Create = () => {
         if (resp.ok) {
           resp.json().then((data) => {
             // console.log(data);
-            // console.log("Success:", data);
+            console.log("Success:", data);
             toast.success("Recipe has been created successfully.");
             navigate("/my_recipes");
           });
         } else {
           // Handle errors
           resp.json().then((errorData) => {
-            // console.error("Error:", errorData); // Log error response
+            console.error("Error:", errorData); // Log error response
             toast.error(errorData);
             // Handle errors
           });
@@ -60,7 +94,7 @@ const Create = () => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
       const formData = new FormData();
-      formData.append("file", file); // Use the 'file' object here
+      formData.append("file", file);
       formData.append("upload_preset", "h9stgrub");
 
       // Replace the Cloudinary URL with your own
@@ -70,11 +104,11 @@ const Create = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          // console.log("Cloudinary Success:", data);
+          console.log("Cloudinary Success:", data);
           // Extract the secure_url from the Cloudinary response
           const imageUrl = data.secure_url;
 
-          // Update the profile_picture_url in formData
+          // Update only the image_url property in formData
           setFormData({
             ...formData,
             image_url: imageUrl,
@@ -88,16 +122,14 @@ const Create = () => {
         });
     } else {
       // Handle non-file input changes (e.g., text input)
-      // Handle non-file input changes (e.g., text input)
+      // Update the state for the specific form field by name
       setFormData({
         ...formData,
-        user: {
-          ...formData.user,
-          [name]: value, // Update the specific user attribute (e.g., name, email, etc.)
-        },
+        [name]: value,
       });
     }
   }
+
   return (
     <>
       <Navbar />
@@ -108,30 +140,32 @@ const Create = () => {
         <div className="flex items-center justify-center p-2">
           <form className="grid grid-cols-2 gap-4 ">
             <div className="flex flex-col">
+              <label>Image</label>
+              <input
+                type="file"
+                // className="rounded-md"
+                accept="image/*"
+                onChange={handleChange}
+              ></input>
+            </div>
+            <div className="flex flex-col">
               <label>Recipe name</label>
               <input
                 type="text"
                 className="rounded-md focus:border-orange-600 focus:ring-orange-600"
                 placeholder="Chapati"
+                name="name"
                 value={formData.name}
                 onChange={handleChange}
               />
             </div>
-            <div className="flex flex-col">
-              <label>Country of origin</label>
-              <input
-                type="text"
-                className="rounded-md focus:border-orange-600 focus:ring-orange-600"
-                placeholder="Kenya"
-                value={formData.country_of_origin}
-                onChange={handleChange}
-              ></input>
-            </div>
+
             <div className="flex flex-col col-span-2">
               <label>Description</label>
               <textarea
                 id="description"
                 rows={4}
+                name="description"
                 className="rounded-md focus:border-orange-600 focus:ring-orange-600"
                 placeholder="Flat and round..."
                 value={formData.description}
@@ -141,7 +175,8 @@ const Create = () => {
             <div className="flex flex-col col-span-2">
               <label>Ingriedients</label>
               <textarea
-                id="ingriedients"
+                id="ingredients"
+                name="ingredients"
                 rows={4}
                 className="rounded-md focus:border-orange-600 focus:ring-orange-600"
                 placeholder="Flour, warm water..."
@@ -153,6 +188,7 @@ const Create = () => {
               <label>Directions</label>
               <textarea
                 id="directions"
+                name="directions"
                 rows={4}
                 className="rounded-md focus:border-orange-600 focus:ring-orange-600"
                 placeholder="1. Knead the..."
@@ -160,12 +196,15 @@ const Create = () => {
                 onChange={handleChange}
               ></textarea>
             </div>
+
             <div className="flex flex-col">
-              <label>Image</label>
+              <label>Country of origin</label>
               <input
-                type="file"
-                // className="rounded-md"
-                accept="image/*"
+                type="text"
+                className="rounded-md focus:border-orange-600 focus:ring-orange-600"
+                placeholder="Kenya"
+                name="country_of_origin"
+                value={formData.country_of_origin}
                 onChange={handleChange}
               ></input>
             </div>
@@ -173,6 +212,7 @@ const Create = () => {
               <label>Number of people served</label>
               <input
                 type="number"
+                name="number_of_people_served"
                 value={formData.number_of_people_served}
                 onChange={handleChange}
                 className="rounded-md focus:border-orange-600 focus:ring-orange-600"
@@ -182,6 +222,7 @@ const Create = () => {
               <label>Cooking time</label>
               <input
                 type="text"
+                name="time"
                 className="rounded-md focus:border-orange-600 focus:ring-orange-600"
                 placeholder="120 mins"
                 value={formData.time}
