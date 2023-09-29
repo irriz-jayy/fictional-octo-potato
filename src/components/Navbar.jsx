@@ -6,42 +6,18 @@ import logo from "../assets/logo.png";
 import avatar from "../assets/avatar.jpg";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import useUser from "../hooks/useUser";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Navbar() {
-  const [user, setUser] = useState([]);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    if (token) {
-      console.log(token);
-      fetch("http://127.0.0.1:3000/profile", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error("Failed to fetch user data");
-          }
-        })
-        .then((userData) => {
-          console.log(userData);
-          setUser(userData);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-  }, []);
+  const user = useUser(token);
+  console.log(token, user);
 
   function handleLogout() {
     const confirmed = window.confirm("Are you sure you want to sign out?");
