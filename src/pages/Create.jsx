@@ -26,7 +26,6 @@ const Create = () => {
 
   useEffect(() => {
     if (token) {
-      console.log(token);
       fetch("http://127.0.0.1:3000/profile", {
         method: "GET",
         headers: {
@@ -42,7 +41,6 @@ const Create = () => {
           }
         })
         .then((userData) => {
-          console.log("User Data:", userData);
           // Extract the user ID from userData and update the formData state
           setFormData({
             ...formData,
@@ -75,10 +73,8 @@ const Create = () => {
       }
 
       const data = await response.json();
-      console.log("Cloudinary Success:", data);
       return data.secure_url;
     } catch (error) {
-      console.error("Error uploading image to Cloudinary:", error);
       toast.error("Error uploading image. Please try again.");
       return null;
     }
@@ -138,14 +134,12 @@ const Create = () => {
       .then((resp) => {
         if (resp.ok) {
           resp.json().then((data) => {
-            console.log("Success:", data);
             toast.success("Recipe has been created successfully.");
             navigate("/my_recipes");
           });
         } else {
           // Handle errors
           resp.json().then((errorData) => {
-            console.error("Error:", errorData); // Log error response
             toast.error(errorData);
             // Handle errors
           });

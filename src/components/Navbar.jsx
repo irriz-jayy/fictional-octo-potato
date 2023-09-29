@@ -17,7 +17,6 @@ export default function Navbar() {
   const token = localStorage.getItem("token");
 
   const user = useUser(token);
-  console.log(token, user);
 
   function handleLogout() {
     const confirmed = window.confirm("Are you sure you want to sign out?");

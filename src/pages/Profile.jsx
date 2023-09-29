@@ -9,37 +9,11 @@ import {
   Edit,
   FavoriteOutlined,
 } from "@mui/icons-material";
+import useUser from "../hooks/useUser";
 
 const Profile = () => {
-  const [user, setUser] = useState([]);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      console.log(token);
-      fetch("http://127.0.0.1:3000/profile", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error("Failed to fetch user data");
-          }
-        })
-        .then((userData) => {
-          console.log(userData);
-          setUser(userData);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-  }, []);
+  const token = localStorage.getItem("token");
+  const user = useUser(token);
   return (
     <>
       <Navbar />
