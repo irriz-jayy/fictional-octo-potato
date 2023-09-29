@@ -42,7 +42,7 @@ const Create = () => {
           }
         })
         .then((userData) => {
-          console.log("ndio hii:", userData);
+          console.log("User Data:", userData);
           // Extract the user ID from userData and update the formData state
           setFormData({
             ...formData,
@@ -54,8 +54,78 @@ const Create = () => {
         });
     }
   }, [token]);
-  function handleSubmit(e) {
+
+  const handleImageUpload = async (file) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "h9stgrub");
+
+      // Replace the Cloudinary URL with your own
+      const response = await fetch(
+        "https://api.cloudinary.com/v1_1/dm66wpmtb/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Error uploading image to Cloudinary");
+      }
+
+      const data = await response.json();
+      console.log("Cloudinary Success:", data);
+      return data.secure_url;
+    } catch (error) {
+      console.error("Error uploading image to Cloudinary:", error);
+      toast.error("Error uploading image. Please try again.");
+      return null;
+    }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const imageUrl = await handleImageUpload(file);
+
+      if (imageUrl) {
+        setFormData({
+          ...formData,
+          image_url: imageUrl,
+        });
+      }
+    }
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Check if the image URL is available
+    if (!formData.image_url) {
+      toast.error("Please upload an image before submitting.");
+      return;
+    }
+
+    // Check if other required fields are filled
+    for (const key in formData) {
+      if (formData[key] === "") {
+        toast.error(`Please fill in the ${key.replace(/_/g, " ")} field.`);
+        return;
+      }
+    }
+
+    // Now you can submit the form data with the image URL
+    const token = localStorage.getItem("token");
+
     fetch("http://127.0.0.1:3000/recipes", {
       method: "POST",
       headers: {
@@ -68,7 +138,6 @@ const Create = () => {
       .then((resp) => {
         if (resp.ok) {
           resp.json().then((data) => {
-            // console.log(data);
             console.log("Success:", data);
             toast.success("Recipe has been created successfully.");
             navigate("/my_recipes");
@@ -86,49 +155,7 @@ const Create = () => {
         console.error("Error:", error);
         // Handle network errors
       });
-  }
-
-  function handleChange(event) {
-    const { name, value } = event.target;
-
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", "h9stgrub");
-
-      // Replace the Cloudinary URL with your own
-      fetch("https://api.cloudinary.com/v1_1/dm66wpmtb/image/upload", {
-        method: "POST",
-        body: formData,
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Cloudinary Success:", data);
-          // Extract the secure_url from the Cloudinary response
-          const imageUrl = data.secure_url;
-
-          // Update only the image_url property in formData
-          setFormData({
-            ...formData,
-            image_url: imageUrl,
-          });
-
-          // Optionally, you can also update the state for immediate display
-          setImageUrl(imageUrl);
-        })
-        .catch((error) => {
-          console.error("Error uploading image to Cloudinary:", error);
-        });
-    } else {
-      // Handle non-file input changes (e.g., text input)
-      // Update the state for the specific form field by name
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-    }
-  }
+  };
 
   return (
     <>
@@ -140,15 +167,6 @@ const Create = () => {
         <div className="flex items-center justify-center p-2">
           <form className="grid grid-cols-2 gap-4 ">
             <div className="flex flex-col">
-              <label>Image</label>
-              <input
-                type="file"
-                // className="rounded-md"
-                accept="image/*"
-                onChange={handleChange}
-              ></input>
-            </div>
-            <div className="flex flex-col">
               <label>Recipe name</label>
               <input
                 type="text"
@@ -159,7 +177,15 @@ const Create = () => {
                 onChange={handleChange}
               />
             </div>
-
+            <div className="flex flex-col">
+              <label>Image</label>
+              <input
+                type="file"
+                // className="rounded-md"
+                accept="image/*"
+                onChange={handleFileChange}
+              ></input>
+            </div>
             <div className="flex flex-col col-span-2">
               <label>Description</label>
               <textarea
