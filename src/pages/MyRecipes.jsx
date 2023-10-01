@@ -1,11 +1,68 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { Button, IconButton } from "@mui/material";
 import { Add, Delete, Edit, Visibility } from "@mui/icons-material";
 import pfp from "../assets/banners.jpg";
+import useUser from "../hooks/useUser";
 
-const Saved = () => {
+const MyRecipes = () => {
+  const [recipes, setRecipes] = useState([]);
+  const token = localStorage.getItem("token");
+  const [user, setUser] = useState([]);
+
+  useEffect(() => {
+    if (token) {
+      fetch("http://127.0.0.1:3000/profile", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error("Failed to fetch user data");
+          }
+        })
+        .then((userData) => {
+          setUser(userData);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [token]);
+
+  console.log(user);
+
+  useEffect(() => {
+    if (token) {
+      fetch(`http://127.0.0.1:3000/users/${user.id}/recipes`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error("Failed to fetch recipes");
+          }
+        })
+        .then((data) => {
+          setRecipes(data);
+          console.log(data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [token, user]);
   return (
     <>
       <Navbar />
@@ -16,7 +73,7 @@ const Saved = () => {
             Created Recipes
           </p>
         </div>
-        {/* saved cards */}
+        {/* cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 min-h-[60vh] ">
           {/* add recipe card */}
           <a
@@ -29,21 +86,32 @@ const Saved = () => {
             </div>
           </a>
           {/* card */}
-          <div className="w-48 border border-orange-600 h-60 rounded-md m-auto">
-            <img src={pfp} alt="" className="object-contain" />
-            <div className="text-center p-2">
-              <p className="font-heading text-lg text-orange-600">Name</p>
-              <IconButton color="primary">
-                <Visibility />
-              </IconButton>
-              <IconButton color="success">
-                <Edit />
-              </IconButton>
-              <IconButton color="error">
-                <Delete />
-              </IconButton>
+          {recipes.map((recipe) => (
+            <div
+              key={recipe.id}
+              className="w-48 border border-orange-600 h-60 rounded-md m-auto"
+            >
+              <img
+                src={recipe.image_url}
+                alt={recipe.name}
+                className="object-cover w-full h-2/3"
+              />
+              <div className="text-center p-2">
+                <p className="font-heading text-lg text-orange-600">
+                  {recipe.name}
+                </p>
+                <IconButton color="primary">
+                  <Visibility />
+                </IconButton>
+                <IconButton color="success">
+                  <Edit />
+                </IconButton>
+                <IconButton color="error">
+                  <Delete />
+                </IconButton>
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
       <Footer />
@@ -51,4 +119,4 @@ const Saved = () => {
   );
 };
 
-export default Saved;
+export default MyRecipes;
