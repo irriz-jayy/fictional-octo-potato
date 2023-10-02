@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import { Button } from "@mui/material";
 import { Add, BookmarkRemove, Visibility } from "@mui/icons-material";
 import useUser from "../hooks/useUser";
+import { Link } from "react-router-dom";
 
 const Saved = () => {
   const [bookmarks, setBookmarks] = useState([]);
@@ -103,16 +104,18 @@ const Saved = () => {
                   className="object-cover h-1/2 w-full"
                 />
                 <div className="text-center p-2">
-                  <p className="font-heading text-lg text-orange-600">
+                  <p className="font-heading text-orange-600">
                     {bookmark.name}
                   </p>
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    endIcon={<Visibility />}
-                  >
-                    View
-                  </Button>
+                  <Link to={`/recipes/${bookmark.id}`} className="mr-2">
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      endIcon={<Visibility />}
+                    >
+                      View
+                    </Button>
+                  </Link>
                   <Button
                     onClick={() => handleUnsaveClick(bookmark.id)} // Call handleUnsaveClick with bookmark id
                     endIcon={<BookmarkRemove />}
