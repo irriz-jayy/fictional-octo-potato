@@ -10,6 +10,34 @@ const Saved = () => {
   const token = localStorage.getItem("token");
   const user = useUser(token);
 
+  // Function to handle un-saving a recipe
+  const handleUnsaveClick = (bookmarkId) => {
+    // Make a DELETE request to remove the bookmark on the server (you need to set up this endpoint)
+    if (token) {
+      fetch(`http://127.0.0.1:3000/users/${user.id}/bookmarks/${bookmarkId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            // If the delete request is successful, remove the bookmark from the state
+            const updatedBookmarks = bookmarks.filter(
+              (bookmark) => bookmark.id !== bookmarkId
+            );
+            setBookmarks(updatedBookmarks);
+          } else {
+            throw new Error("Failed to unsave recipe.");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  };
+
   useEffect(() => {
     if (token && user.id) {
       fetch(`http://127.0.0.1:3000/users/${user.id}/bookmarks`, {
@@ -35,6 +63,7 @@ const Saved = () => {
         });
     }
   }, [token, user]);
+
   return (
     <>
       <Navbar />
@@ -85,6 +114,7 @@ const Saved = () => {
                     View
                   </Button>
                   <Button
+                    onClick={() => handleUnsaveClick(bookmark.id)} // Call handleUnsaveClick with bookmark id
                     endIcon={<BookmarkRemove />}
                     color="secondary"
                     variant="contained"
