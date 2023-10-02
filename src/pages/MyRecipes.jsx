@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { Button, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { Add, Delete, Edit, Visibility } from "@mui/icons-material";
-import pfp from "../assets/banners.jpg";
 import useUser from "../hooks/useUser";
 
 const MyRecipes = () => {
