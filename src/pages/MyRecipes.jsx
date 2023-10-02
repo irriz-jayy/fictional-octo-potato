@@ -61,32 +61,40 @@ const MyRecipes = () => {
             </div>
           </a>
           {/* card */}
-          {recipes.map((recipe) => (
-            <div
-              key={recipe.id}
-              className="w-48 border border-orange-600 h-60 rounded-md m-auto"
-            >
-              <img
-                src={recipe.image_url}
-                alt={recipe.name}
-                className="object-cover w-full h-2/3"
-              />
-              <div className="text-center p-2">
-                <p className="font-heading text-lg text-orange-600">
-                  {recipe.name}
-                </p>
-                <IconButton color="primary">
-                  <Visibility />
-                </IconButton>
-                <IconButton color="success">
-                  <Edit />
-                </IconButton>
-                <IconButton color="error">
-                  <Delete />
-                </IconButton>
+          {recipes.length === 0 ? (
+            <>
+              <p className="text-center text-lg text-gray-500 font-heading m-auto">
+                You haven't created any recipes yet.
+              </p>
+            </>
+          ) : (
+            recipes.map((recipe) => (
+              <div
+                key={recipe.id}
+                className="w-48 border border-orange-600 h-60 rounded-md m-auto"
+              >
+                <img
+                  src={recipe.image_url}
+                  alt={recipe.name}
+                  className="object-cover w-full h-2/3"
+                />
+                <div className="text-center p-2">
+                  <p className="font-heading text-lg text-orange-600">
+                    {recipe.name}
+                  </p>
+                  <IconButton color="primary">
+                    <Visibility />
+                  </IconButton>
+                  <IconButton color="success">
+                    <Edit />
+                  </IconButton>
+                  <IconButton color="error">
+                    <Delete />
+                  </IconButton>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
       <Footer />
