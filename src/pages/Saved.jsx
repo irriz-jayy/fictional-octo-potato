@@ -1,11 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { Button } from "@mui/material";
-import { Add, BookmarkRemove } from "@mui/icons-material";
-import pfp from "../assets/banners.jpg";
+import { Add, BookmarkRemove, Visibility } from "@mui/icons-material";
+import useUser from "../hooks/useUser";
 
 const Saved = () => {
+  const [bookmarks, setBookmarks] = useState([]);
+  const token = localStorage.getItem("token");
+  const user = useUser(token);
+
+  useEffect(() => {
+    if (token && user.id) {
+      fetch(`http://127.0.0.1:3000/users/${user.id}/bookmarks`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error("Failed to fetch bookmarks");
+          }
+        })
+        .then((data) => {
+          setBookmarks(data);
+          console.log(bookmarks);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [token, user]);
   return (
     <>
       <Navbar />
@@ -23,23 +52,49 @@ const Saved = () => {
           >
             <Add />
             <div>
-              <p className="w-full h-full font-heading">Add recipes</p>
+              <p className="w-full h-full font-heading">Save recipes</p>
             </div>
           </a>
           {/* card */}
-          <div className="w-48 border border-orange-600 h-60 rounded-md m-auto">
-            <img src={pfp} alt="" className="object-contain" />
-            <div className="text-center p-2">
-              <p className="font-heading text-lg text-orange-600">Name</p>
-              <Button
-                endIcon={<BookmarkRemove />}
-                color="secondary"
-                variant="contained"
+          {bookmarks.length === 0 ? (
+            <>
+              <p className="text-center text-lg text-gray-500 font-heading m-auto">
+                You haven't saved any recipes yet.
+              </p>
+            </>
+          ) : (
+            bookmarks.map((bookmark) => (
+              <div
+                className="w-48 border border-orange-600 h-60 rounded-md m-auto"
+                key={bookmark.id}
               >
-                Unsave
-              </Button>
-            </div>
-          </div>
+                <img
+                  src={bookmark.image_url}
+                  alt=""
+                  className="object-cover h-1/2 w-full"
+                />
+                <div className="text-center p-2">
+                  <p className="font-heading text-lg text-orange-600">
+                    {bookmark.name}
+                  </p>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    endIcon={<Visibility />}
+                  >
+                    View
+                  </Button>
+                  <Button
+                    endIcon={<BookmarkRemove />}
+                    color="secondary"
+                    variant="contained"
+                  >
+                    Unsave
+                  </Button>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
       <Footer />
