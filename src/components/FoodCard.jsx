@@ -18,7 +18,10 @@ import useUser from "../hooks/useUser";
 import { toast } from "react-toastify";
 
 const FoodCard = ({ recipe }) => {
-  const [isSaved, setIsSaved] = useState(false); // State to track if the recipe is saved
+  const [isSaved, setIsSaved] = useState(
+    // Check if the recipe is saved in localStorage
+    localStorage.getItem(`recipe_${recipe.id}_saved`) === "true"
+  );
   const token = localStorage.getItem("token"); // Get the user's token
   const user = useUser(token);
 
@@ -46,7 +49,8 @@ const FoodCard = ({ recipe }) => {
     })
       .then((response) => {
         if (response.ok) {
-          setIsSaved(true); // Update the state to indicate the recipe is saved
+          setIsSaved(true);
+          localStorage.setItem(`recipe_${recipe.id}_saved`, "true"); // Update the state to indicate the recipe is saved
           toast.success("Recipe saved successfully!");
         } else {
           throw new Error("Failed to save recipe.");
