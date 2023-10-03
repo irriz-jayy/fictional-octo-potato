@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import { IconButton } from "@mui/material";
 import { Add, Delete, Edit, Visibility } from "@mui/icons-material";
 import useUser from "../hooks/useUser";
+import { toast } from "react-toastify";
 
 const MyRecipes = () => {
   const [recipes, setRecipes] = useState([]);
@@ -37,6 +38,31 @@ const MyRecipes = () => {
         });
     }
   }, [token, user]);
+
+  function handleDelete(recipeId) {
+    fetch(`http://127.0.0.1:3000/recipes/${recipeId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          // If the recipe is deleted successfully, remove it from the state
+          const updatedRecipes = recipes.filter(
+            (recipe) => recipe.id !== recipeId
+          );
+          setRecipes(updatedRecipes);
+          console.log("Recipe deleted successfully.");
+        } else {
+          throw new Error("Failed to delete recipe.");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
   return (
     <>
       <Navbar />
@@ -87,7 +113,10 @@ const MyRecipes = () => {
                   <IconButton color="success">
                     <Edit />
                   </IconButton>
-                  <IconButton color="error">
+                  <IconButton
+                    color="error"
+                    onClick={() => handleDelete(recipe.id)}
+                  >
                     <Delete />
                   </IconButton>
                 </div>
