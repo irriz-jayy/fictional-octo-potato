@@ -40,38 +40,40 @@ const MyRecipes = () => {
   }, [token, user]);
 
   function handleDelete(recipeId) {
-  // Show a confirmation dialog
-  const confirmDelete = window.confirm("Are you sure you want to delete this recipe?");
+    // Show a confirmation dialog using window.confirm
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this recipe?"
+    );
 
-  if (!confirmDelete) {
-    // If the user cancels the deletion, do nothing
-    return;
-  }
+    if (!confirmDelete) {
+      // If the user cancels the deletion, do nothing
+      return;
+    }
 
-  // Continue with the deletion if confirmed
-  fetch(`http://127.0.0.1:3000/recipes/${recipeId}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => {
-      if (response.ok) {
-        // If the recipe is deleted successfully, remove it from the state
-        const updatedRecipes = recipes.filter(
-          (recipe) => recipe.id !== recipeId
-        );
-        setRecipes(updatedRecipes);
-        console.log("Recipe deleted successfully.");
-      } else {
-        throw new Error("Failed to delete recipe.");
-      }
+    // Continue with the deletion if confirmed
+    fetch(`http://127.0.0.1:3000/recipes/${recipeId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     })
-    .catch((error) => {
-      console.error(error);
-    });
-}
+      .then((response) => {
+        if (response.ok) {
+          // If the recipe is deleted successfully, remove it from the state
+          const updatedRecipes = recipes.filter(
+            (recipe) => recipe.id !== recipeId
+          );
+          setRecipes(updatedRecipes);
+          console.log("Recipe deleted successfully.");
+        } else {
+          throw new Error("Failed to delete recipe.");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 
   return (
     <>
