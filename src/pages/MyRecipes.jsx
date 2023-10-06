@@ -173,40 +173,90 @@ const MyRecipes = () => {
       >
         {editedRecipe && (
           <div>
-            <h2>Edit Recipe</h2>
-            <form>
-              <div className="form-group">
-                <label htmlFor="recipeName">Name:</label>
-                <input
-                  type="text"
-                  id="recipeName"
-                  name="recipeName"
-                  placeholder="Recipe Name"
-                  defaultValue={editedRecipe.name}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="recipeDescription">Description:</label>
-                <textarea
-                  id="recipeDescription"
-                  name="recipeDescription"
-                  placeholder="Recipe Description"
-                  defaultValue={editedRecipe.description}
-                ></textarea>
-              </div>
-              <div className="form-group">
-                <label htmlFor="recipeIngredients">Ingredients:</label>
-                <textarea
-                  id="recipeIngredients"
-                  name="recipeIngredients"
-                  placeholder="Recipe Ingredients (comma separated)"
-                  defaultValue={editedRecipe.ingredients}
-                ></textarea>
-              </div>
-              {/* Exclude the image if you don't want to allow changing it */}
-              <button onClick={handleSaveEdit}>Save</button>
-              <button onClick={closeModal}>Cancel</button>
-            </form>
+            <h2 className="text-2xl text-center text-orange-600 font-heading">
+              Edit Recipe
+            </h2>
+            <div className="flex items-center justify-center p-2 font-main">
+              <form className="grid grid-cols-2 gap-4 ">
+                <div className="flex flex-col">
+                  <label htmlFor="recipeName">Name</label>
+                  <input
+                    type="text"
+                    id="recipeName"
+                    name="recipeName"
+                    placeholder="Recipe Name"
+                    className="rounded-md focus:border-orange-600 focus:ring-orange-600"
+                    defaultValue={editedRecipe.name}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label htmlFor="recipeName">Country of origin</label>
+                  <input
+                    type="text"
+                    id="country"
+                    name="country"
+                    placeholder="Country of origin"
+                    className="rounded-md focus:border-orange-600 focus:ring-orange-600"
+                    defaultValue={editedRecipe.country_of_origin}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label htmlFor="recipeName">Cooking time</label>
+                  <input
+                    type="text"
+                    id="time"
+                    name="time"
+                    placeholder="time"
+                    className="rounded-md focus:border-orange-600 focus:ring-orange-600"
+                    defaultValue={editedRecipe.time}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label htmlFor="recipeName">Number of people served</label>
+                  <input
+                    type="number"
+                    id="number_of_people_served"
+                    name="number_of_people_served"
+                    placeholder="number_of_people_served"
+                    className="rounded-md focus:border-orange-600 focus:ring-orange-600"
+                    defaultValue={editedRecipe.number_of_people_served}
+                  />
+                </div>
+                <div className="flex flex-col col-span-2">
+                  <label htmlFor="recipeDescription">Description</label>
+                  <textarea
+                    id="recipeDescription"
+                    name="recipeDescription"
+                    placeholder="Recipe Description"
+                    className="rounded-md focus:border-orange-600 focus:ring-orange-600"
+                    defaultValue={editedRecipe.description}
+                  ></textarea>
+                </div>
+                <div className="flex flex-col col-span-2">
+                  <label htmlFor="recipeIngredients">Ingredients</label>
+                  <textarea
+                    id="recipeIngredients"
+                    name="recipeIngredients"
+                    placeholder="Recipe Ingredients (comma separated)"
+                    className="rounded-md focus:border-orange-600 focus:ring-orange-600"
+                    defaultValue={editedRecipe.ingredients}
+                  ></textarea>
+                </div>
+                {/* Exclude the image if you don't want to allow changing it */}
+                <button
+                  onClick={handleSaveEdit}
+                  className="bg-green-600  h-12 text-white rounded-md hover:bg-green-500"
+                >
+                  Save
+                </button>
+                <button
+                  onClick={closeModal}
+                  className="bg-red-600  h-12 text-white rounded-md hover:bg-red-500"
+                >
+                  Cancel
+                </button>
+              </form>
+            </div>
           </div>
         )}
       </Modal>
