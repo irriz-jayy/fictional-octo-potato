@@ -5,11 +5,14 @@ import { IconButton } from "@mui/material";
 import { Add, Delete, Edit, Visibility } from "@mui/icons-material";
 import useUser from "../hooks/useUser";
 import { toast } from "react-toastify";
+import Modal from "react-modal"; // Import react-modal
 
 const MyRecipes = () => {
   const [recipes, setRecipes] = useState([]);
   const token = localStorage.getItem("token");
   const user = useUser(token);
+  const [editedRecipe, setEditedRecipe] = useState(null); // Track the edited recipe
+  const [isModalOpen, setIsModalOpen] = useState(false); // Control modal visibility
 
   console.log(user);
 
@@ -75,6 +78,26 @@ const MyRecipes = () => {
       });
   }
 
+  function handleEdit(recipe) {
+    // Set the edited recipe and open the modal
+    setEditedRecipe(recipe);
+    setIsModalOpen(true);
+  }
+
+  // Handle closing the modal
+  function closeModal() {
+    setIsModalOpen(false);
+    setEditedRecipe(null);
+  }
+
+  // Handle saving the edited recipe
+  function handleSaveEdit() {
+    // Implement your save logic here
+    // You can send an API request to update the recipe
+    // After successful update, close the modal
+    closeModal();
+  }
+
   return (
     <>
       <Navbar />
@@ -122,7 +145,10 @@ const MyRecipes = () => {
                   <IconButton color="primary">
                     <Visibility />
                   </IconButton>
-                  <IconButton color="success">
+                  <IconButton
+                    color="success"
+                    onClick={() => handleEdit(recipe)}
+                  >
                     <Edit />
                   </IconButton>
                   <IconButton
@@ -138,6 +164,52 @@ const MyRecipes = () => {
         </div>
       </div>
       <Footer />
+      {/* Modal for editing */}
+      {/* Modal for editing */}
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        contentLabel="Edit Recipe Modal"
+      >
+        {editedRecipe && (
+          <div>
+            <h2>Edit Recipe</h2>
+            <form>
+              <div className="form-group">
+                <label htmlFor="recipeName">Name:</label>
+                <input
+                  type="text"
+                  id="recipeName"
+                  name="recipeName"
+                  placeholder="Recipe Name"
+                  defaultValue={editedRecipe.name}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="recipeDescription">Description:</label>
+                <textarea
+                  id="recipeDescription"
+                  name="recipeDescription"
+                  placeholder="Recipe Description"
+                  defaultValue={editedRecipe.description}
+                ></textarea>
+              </div>
+              <div className="form-group">
+                <label htmlFor="recipeIngredients">Ingredients:</label>
+                <textarea
+                  id="recipeIngredients"
+                  name="recipeIngredients"
+                  placeholder="Recipe Ingredients (comma separated)"
+                  defaultValue={editedRecipe.ingredients}
+                ></textarea>
+              </div>
+              {/* Exclude the image if you don't want to allow changing it */}
+              <button onClick={handleSaveEdit}>Save</button>
+              <button onClick={closeModal}>Cancel</button>
+            </form>
+          </div>
+        )}
+      </Modal>
     </>
   );
 };
