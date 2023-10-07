@@ -90,12 +90,29 @@ const MyRecipes = () => {
     setEditedRecipe(null);
   }
 
+  function handleInputChange(e, field) {
+    const updatedRecipe = { ...editedRecipe };
+    updatedRecipe[field] = e.target.value;
+    setEditedRecipe(updatedRecipe);
+  }
   // Handle saving the edited recipe
-  function handleSaveEdit() {
-    // Implement your save logic here
-    // You can send an API request to update the recipe
-    // After successful update, close the modal
-    closeModal();
+  function handleSaveEdit(e) {
+    e.preventDefault();
+    console.log("handleSaveEdit called");
+
+    const updatedRecipe = {
+      user_id: user.id,
+      name: editedRecipe.name,
+      country_of_origin: editedRecipe.country_of_origin,
+      description: editedRecipe.description,
+      time: editedRecipe.time,
+      ingredients: editedRecipe.ingredients,
+      directions: editedRecipe.directions,
+      description: editedRecipe.description,
+      number_of_people_served: editedRecipe.number_of_people_served,
+    };
+
+    console.log(updatedRecipe);
   }
 
   return (
@@ -177,7 +194,10 @@ const MyRecipes = () => {
               Edit Recipe
             </h2>
             <div className="flex items-center justify-center p-2 font-main">
-              <form className="grid grid-cols-2 gap-4 ">
+              <form
+                className="grid grid-cols-2 gap-4 "
+                onSubmit={(e) => handleSaveEdit(e)}
+              >
                 <div className="flex flex-col">
                   <label htmlFor="recipeName">Name</label>
                   <input
@@ -187,17 +207,19 @@ const MyRecipes = () => {
                     placeholder="Recipe Name"
                     className="rounded-md focus:border-orange-600 focus:ring-orange-600"
                     defaultValue={editedRecipe.name}
+                    onChange={(e) => handleInputChange(e, "name")}
                   />
                 </div>
                 <div className="flex flex-col">
                   <label htmlFor="recipeName">Country of origin</label>
                   <input
                     type="text"
-                    id="country"
-                    name="country"
+                    id="country_of_origin"
+                    name="country_of_origin"
                     placeholder="Country of origin"
                     className="rounded-md focus:border-orange-600 focus:ring-orange-600"
                     defaultValue={editedRecipe.country_of_origin}
+                    onChange={(e) => handleInputChange(e, "country_of_origin")}
                   />
                 </div>
                 <div className="flex flex-col">
@@ -209,6 +231,8 @@ const MyRecipes = () => {
                     placeholder="time"
                     className="rounded-md focus:border-orange-600 focus:ring-orange-600"
                     defaultValue={editedRecipe.time}
+                    value={editedRecipe.time}
+                    onChange={(e) => handleInputChange(e, "time")}
                   />
                 </div>
                 <div className="flex flex-col">
@@ -220,16 +244,33 @@ const MyRecipes = () => {
                     placeholder="number_of_people_served"
                     className="rounded-md focus:border-orange-600 focus:ring-orange-600"
                     defaultValue={editedRecipe.number_of_people_served}
+                    onChange={(e) =>
+                      handleInputChange(e, "number_of_people_served")
+                    }
                   />
+                </div>
+                <div className="flex flex-col col-span-2">
+                  <label htmlFor="recipeDescription">Directions</label>
+                  <textarea
+                    type="text"
+                    id="recipeDirections"
+                    name="recipeDirections"
+                    placeholder="Recipe directions"
+                    className="rounded-md focus:border-orange-600 focus:ring-orange-600"
+                    defaultValue={editedRecipe.directions}
+                    onChange={(e) => handleInputChange(e, "directions")}
+                  ></textarea>
                 </div>
                 <div className="flex flex-col col-span-2">
                   <label htmlFor="recipeDescription">Description</label>
                   <textarea
+                    type="text"
                     id="recipeDescription"
                     name="recipeDescription"
                     placeholder="Recipe Description"
                     className="rounded-md focus:border-orange-600 focus:ring-orange-600"
                     defaultValue={editedRecipe.description}
+                    onChange={(e) => handleInputChange(e, "descritpion")}
                   ></textarea>
                 </div>
                 <div className="flex flex-col col-span-2">
@@ -240,11 +281,12 @@ const MyRecipes = () => {
                     placeholder="Recipe Ingredients (comma separated)"
                     className="rounded-md focus:border-orange-600 focus:ring-orange-600"
                     defaultValue={editedRecipe.ingredients}
+                    onChange={(e) => handleInputChange(e, "ingredients")}
                   ></textarea>
                 </div>
                 {/* Exclude the image if you don't want to allow changing it */}
                 <button
-                  onClick={handleSaveEdit}
+                  type="submit"
                   className="bg-green-600  h-12 text-white rounded-md hover:bg-green-500"
                 >
                   Save
