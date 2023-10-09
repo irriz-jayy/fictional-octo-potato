@@ -113,6 +113,30 @@ const MyRecipes = () => {
     };
 
     console.log(updatedRecipe);
+    fetch(`http://127.0.0.1:3000/recipes/${editedRecipe.id}`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedRecipe),
+    })
+      .then((response) => {
+        if (response.ok) {
+          // Handle success
+          console.log("Recipe updated successfully.");
+          toast.success("Recipe updated successfully");
+          // Close the modal or perform any other necessary actions
+          closeModal();
+        } else {
+          // Handle error
+          throw new Error("Failed to update recipe.");
+          toast.error("Failed to update");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   return (
