@@ -6,6 +6,7 @@ import { Add, Delete, Edit, Visibility } from "@mui/icons-material";
 import useUser from "../hooks/useUser";
 import { toast } from "react-toastify";
 import Modal from "react-modal"; // Import react-modal
+import { Link } from "react-router-dom";
 
 const MyRecipes = () => {
   const [recipes, setRecipes] = useState([]);
@@ -183,9 +184,12 @@ const MyRecipes = () => {
                   <p className="font-heading text-lg text-orange-600">
                     {recipe.name}
                   </p>
+                  <Link to={`/recipes/${recipe.id}`} className="mr-2">
                   <IconButton color="primary">
                     <Visibility />
                   </IconButton>
+            </Link>
+                  
                   <IconButton
                     color="success"
                     onClick={() => handleEdit(recipe)}
