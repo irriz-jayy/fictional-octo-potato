@@ -128,10 +128,10 @@ const MyRecipes = () => {
           toast.success("Recipe updated successfully");
           // Close the modal or perform any other necessary actions
           closeModal();
+          window.location.reload();
         } else {
           // Handle error
           throw new Error("Failed to update recipe.");
-          toast.error("Failed to update");
         }
       })
       .catch((error) => {
